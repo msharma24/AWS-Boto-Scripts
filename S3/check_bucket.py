@@ -1,6 +1,8 @@
 #!usr/bin/python
 #Fri Feb 10 22:27:42 IST 2017
-
+"""
+Pass the S3 buket name as command line argument to check its availbility in your S3
+"""
 import argparse
 import boto3
 
