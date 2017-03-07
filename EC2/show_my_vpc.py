@@ -3,7 +3,7 @@
 #Mon Mar  6 22:20:52 IST 2017
 #Mukesh Sharma
 #Pass the vpcid to get detailed infromation about the vpc
-#Prerequisites plese have your IAM API Access Key and Secret Access Key set up in ~/.aws/credentials file
+#Prerequisites please have your IAM API Access Key and Secret Access Key set up in ~/.aws/credentials file
 
 import boto3
 import botocore
