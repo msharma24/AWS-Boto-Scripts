@@ -13,9 +13,9 @@ def all_vpc_id():
     try:
         client = boto3.client('ec2')
         vpc_details = client.describe_vpcs()
+        print "VPC ID List \n"
 
         for vpc_id in vpc_details['Vpcs']:
-            print "VPC ID List \n"
             print vpc_id['VpcId']
 
         print "run --vpcid VPCID as optional argument to get all the vpc information"
@@ -46,6 +46,14 @@ def vpc_definition():
             print "ERROR => ",e
 
 
+def main():
+    if args.vpcid:
+            vpc_definition()
+    else:
+        all_vpc_id()
+
+
+
 
 if __name__ == "__main__":
 
@@ -54,13 +62,8 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-##### Execute the  methods
-
-    if args.vpcid:
-        vpc_definition()
-    else:
-        all_vpc_id()
-
+#Execute the main method
+main()
 
 
 
