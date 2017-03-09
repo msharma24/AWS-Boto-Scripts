@@ -26,11 +26,10 @@ def vpc_create():
             CidrBlock=vpc_cidr,
             InstanceTenancy=vpc_tenancy
             )
-        """
+
         vpc_id = response_create_vpc['Vpc']
-        for id in vpd_id['Vpc']
-            vpc_id =id['VpcId']
-            """
+        #print vpc_id
+        print vpc_id['VpcId']
 
 
     except Exception as e:
@@ -40,7 +39,7 @@ def vpc_create():
 
 
 
-def subnet_create():
+#def subnet_create():
 
 
 
