@@ -17,7 +17,6 @@ print "Connected to EC2"
 
 #methods
 def vpc_create():
-    print "Creating VPC"
     try:
 
         print "Creating VPC"
@@ -29,19 +28,19 @@ def vpc_create():
 
         vpc_id = response_create_vpc['Vpc']
         #print vpc_id
-        print vpc_id['VpcId']
+        vpcid = vpc_id['VpcId']
+        print vpcid
+        #print vpc_id['VpcId']
 
+        response_create_subnet = client.create_subnet(
+                DryRun=dry_run_false,
+                CidrBlock =subnet_cidr,
+                VpcId=vpcid
+                )
+        print "Created subnet ",response_create_subnet
 
     except Exception as e:
         print "ERROR=>\n" ,e
-
-
-
-
-
-#def subnet_create():
-
-
 
 #main method
 def main():
