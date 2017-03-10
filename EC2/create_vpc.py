@@ -1,13 +1,13 @@
 #!usr/bin/python
 import boto3
 import botocore
-import logging
 
 #variables
 vpc_cidr = '10.0.0.0/16'
 vpc_tenancy = 'default'
 dry_run_true = True
 dry_run_false= False
+rt_cidr="0.0.0.0/0"
 #########################
 subnet_cidr = '10.0.1.0/24'
 
@@ -44,7 +44,7 @@ def vpc_create():
         subnetid = subnet_id['SubnetId']
         print subnetid
 
-        """THis function creates the internet gateway"""
+        """This function creates the internet gateway"""
         response_create_igw =client.create_internet_gateway(
                 DryRun=dry_run_false
                 )
@@ -60,6 +60,34 @@ def vpc_create():
                 VpcId=vpcid
                 )
         print "Attached IGW " + igwid + " to the VPC " + vpcid
+
+        #ceate a route table
+        print "Created a new Route Table "
+        response_create_rt = client.create_route_table(
+                DryRun=dry_run_false,
+                VpcId=vpcid
+                )
+        rt_id = response_create_rt['RouteTable']
+        rtid=rt_id['RouteTableId']
+        print "Created Route Table ",rtid
+
+        #associate the subnenet to the route table
+        response_assoc_rt = client.associate_route_table(
+                DryRun=dry_run_false,
+                SubnetId=subnetid,
+                RouteTableId=rtid
+                )
+        print "Associated the RouteTable "+ rtid + " to " , " SubnetID" + subnetid
+
+        print "Create Route to the Internet in the RouteTable " + rtid
+        response_create_route = client.create_route(
+                DestinationCidrBlock=rt_cidr,
+                GatewayId=igwid,
+                RouteTableId=rtid
+                )
+
+
+
 
 
 
