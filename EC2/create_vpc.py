@@ -2,6 +2,7 @@
 #Fri Mar 10 23:28:16 IST 2017
 import boto3
 import botocore
+import os
 
 
 #Usage:Set your IAM keys in the enviroment ~/.aws/credentials
@@ -19,12 +20,12 @@ subnet_cidr = '10.0.1.0/24'
 
 #create global client connection to the EC2
 client = boto3.client('ec2')
-print "Connected to EC2"
 
 print "------"*22
 print"\t\t\t\t VPC with a single Public Subnet"
 print "------"*22
 
+print "Connected to EC2"
 
   #methods
 def vpc_create():
@@ -127,6 +128,25 @@ def vpc_create():
 
         print "Ingress Rules for Secuirty Group "+secgid + " created Here is the response recieved\n"+str(response_auth_secg_1)
         print "Ingress Rules for Secuirty Group "+secgid + " created Here is the response recieved\n"+str(response_auth_secg_2)
+
+        print "now creating a keypair to ssh into the instances"
+        key_name =vpcid+"_key_pair.pem"
+
+        response_create_key = client.create_key_pair(
+                KeyName=vpcid+"Key_Pair"
+                )
+        crypto_key_data = response_create_key['KeyMaterial']
+
+        print "Writing the key to "+ os.getcwd() + "/"+key_name
+        key_file =open(key_name ,'w')
+        key_file.write(crypto_key_data )
+        key_file.close()
+
+        print "Saved =>",key_name
+
+        print "Securing the ",key_name
+        os.system('chmod 400 *.pem')
+        print "Permissions changed on the ",key_name
 
 
     except Exception as e:
