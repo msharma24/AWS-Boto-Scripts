@@ -106,6 +106,29 @@ def vpc_create():
         secgid =response_create_sg['GroupId']
         print "Secuirty Group Id",secgid
 
+        #created the security groups"
+        response_auth_secg_1=client.authorize_security_group_ingress(
+                DryRun=dry_run_false,
+                GroupId=secgid,
+                IpProtocol='tcp',
+                FromPort=22,
+                ToPort=22,
+                CidrIp='0.0.0.0/0'
+               )
+
+        response_auth_secg_2=client.authorize_security_group_ingress(
+                DryRun=dry_run_false,
+                GroupId=secgid,
+                IpProtocol='tcp',
+                FromPort=80,
+                ToPort=80,
+                CidrIp='0.0.0.0/0'
+                )
+
+        print "Ingress Rules for Secuirty Group "+secgid + " created Here is the response recieved\n"+str(response_auth_secg_1)
+        print "Ingress Rules for Secuirty Group "+secgid + " created Here is the response recieved\n"+str(response_auth_secg_2)
+
+
     except Exception as e:
         print "ERROR=>\n" ,e
 
