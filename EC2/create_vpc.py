@@ -15,7 +15,6 @@ vpc_tenancy = 'default'
 dry_run_true = True
 dry_run_false= False
 rt_cidr="0.0.0.0/0"
-#########################
 subnet_cidr = '10.0.1.0/24'
 
 #create global client connection to the EC2
@@ -25,7 +24,7 @@ print "------"*22
 print"\t\t\t\t VPC with a single Public Subnet"
 print "------"*22
 
-print "Connected to EC2"
+print "Initialised EC2 client"
 
   #methods
 def vpc_create():
